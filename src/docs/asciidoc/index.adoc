@@ -21,7 +21,7 @@ Joker Java Conference 2020 / Jendrik Johannes, Gradle Inc.
 +++</div>+++
 +++</h3>+++
 
-== What is this Gradle?
+== What is Gradle?
 
 * https://github.com/gradle/gradle[*Gradle Build Tool*]
 ** Open Source (APL)
@@ -32,14 +32,15 @@ Joker Java Conference 2020 / Jendrik Johannes, Gradle Inc.
 ** Works with multiple Built Tools: Gradle Build Tool, Maven, ...
 ** Build Insights, Caching, Performance Analysis, Flaky Test Detection, ...
 ** Developed by Gradle Inc.
+** Public build scans for Gradle: https://scans.gradle.com/[scans.gradle.com]
 
-== Who is this Gradle?
+== Who is Gradle?
 
 Fully remote distributed company
 
 image::gradle-staff-map.png[width=1200,height=0%]
 
-https://gradle.com/careers/
+https://gradle.com/careers
 
 == Gradle Build Tool (GBT)
 
@@ -59,9 +60,9 @@ https://gradle.com/careers/
 
 == How does Gradle work?
 
-* Runs on the JVM - everything is JVM bytecode
+* Runs on the JVM
 * A set of core systems which are language-agnostic
-** Execution engine to perform "units of work"
+** Execution engine to execute "units of work"
 ** Dependency management engine
 ** File system watching
 ** Caching built around all of that
@@ -71,6 +72,7 @@ https://gradle.com/careers/
 ** *Your own plugins as part of your build!*
 
 == Perspective on Gradle in this talk
+
 * Look at Gradle as a tool to model your software (architecture)
 * Let Gradle read that model to build your software
 * Customize "how" Gradle builds things (through plugins)
