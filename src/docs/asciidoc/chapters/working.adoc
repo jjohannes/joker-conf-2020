@@ -1,0 +1,100 @@
+[background-color="#01303a"]
+== Working with your Gradle builds
+
+== Calling Gradle tasks
+
+- Gradle knows inputs and outputs
+- If output of a task is the input of another, there is a dependency
+- Incremental - a task only executes if input/output changes
+- Build cache - Outputs can be retrieved from (remote) cache
+
+Demo #4
+
+Exploring: task execution, incremental builds, build cache, custom tasks
+
+== Custom tasks
+// Example: class file counter
+
+* An abstract class extending `DefaultTask`
+* Written in Java, Scala, Groovy, Kotlin
+* Define properties as annotated abstract getter methods (`getPropertyName()`)
+** `@InputFile`, `@InputFiles`, `@OutputFile`, `@OutputDirectory`
+** Each task should have at least one input and one output
+** Used for: task dependency, incremental builds, build cache
+* Each task has at least one action implemented in a `@TaskAction` method
+** Usually you have only one action method
+** From there, delegate to other methods/classes or call external tools
+
+== Variants and dependency resolution
+
+* Each project (or binary component) has multiple variants
+* Gradle selects one variant during _dependency resolution_
+* For example: Java Libraries have an "API" and a "Runtime" variant
+
+[plantuml, variants-declared, png, width=540, height=0%]
+....
+scale 2400 width
+skinparam monochrome true
+skinparam component {
+    BackgroundColor white
+    BorderColor Black
+	ArrowColor Black
+}
+
+[user-feature]
+[domain-model]
+
+rectangle "<<project>> data" as data
+rectangle "<<project>> release" as release
+rectangle "<<project>> table" as table
+
+table -right-> data
+data -right-> release
+
+rectangle "<<variant>> api" as dataApi
+rectangle "<<variant>> api" as releaseApi
+
+rectangle "<<variant>> runtime" as dataRT
+rectangle "<<variant>> runtime" as releaseRT
+
+cloud "[table] runtimeClasspath" as runtimeClasspath
+cloud "[table] compileClasspath" as compileClasspath
+
+[user-feature] *-down- table
+[user-feature] *-down- data
+[domain-model] *-down- release
+
+data *-- dataApi
+data *-- dataRT
+release *-- releaseApi
+release *-- releaseRT
+
+compileClasspath .up.> releaseApi
+compileClasspath .up.> dataApi
+
+runtimeClasspath .up..> releaseRT
+runtimeClasspath .up..> dataRT
+....
+
+
+== Publishing and using binary components
+
+- Publish any project as binary component with `maven-publish` plugin
+- Published to repository (can be a local folder)
+
+```
+─ user-feature
+  └── settings.gradle.kts
+      | ...
+      | // includeBuild("../domain-model")
+      | repositories { maven { url = uri("my-repository") } }
+      | ...
+```
+
+// == Sharing location declaration (settings.gradle)
+
+
+
+
+
+

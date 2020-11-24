@@ -1,0 +1,119 @@
+[background-color="#01303a"]
+== Organising Build Configuration in a Build Logic Component
+
+== Adding a Build Logic Component
+
+[plantuml, arch-component-10, png, width=540, height=0%]
+....
+scale 2400 width
+skinparam monochrome true
+skinparam component {
+    BackgroundColor white
+    BorderColor Black
+	ArrowColor Black
+}
+
+database "External Repository" {
+  [Spring Boot\nFramework] as SpringBoot
+}
+
+package "Application Layer" {
+  [server-application]
+}
+
+package "Business Logic Layer" {
+  [user-feature]
+}
+
+package "Domain Model Layer" {
+  [domain-model]
+}
+
+[server-application] -down-> [SpringBoot]
+
+folder {
+   [build-logic]
+}
+
+[server-application] ..> [build-logic]
+[user-feature] ..> [build-logic]
+[domain-model] ..> [build-logic]
+....
+
+Demo #2 - We add a separate component (Gradle build) for build logic
+
+```
+- build-logic
+  └── settings.gradle.kts
+
+- domain-model
+  └── settings.gradle.kts
+
+- server-application
+  └── settings.gradle.kts
+
+- user-feature
+  └── settings.gradle.kts
+```
+
+== Component: User Feature
+
+[plantuml, user-feature-2, png, width=200, height=0%]
+....
+scale 2400 width
+skinparam monochrome true
+skinparam component {
+    BackgroundColor white
+    BorderColor Black
+	ArrowColor Black
+}
+
+[user-feature]
+....
+
+```
+─ user-feature
+  ├── data
+  │   └── build.gradle.kts
+  │       | plugins { id("com.example.java-library") } // project type
+  │
+  ├── table
+  │   └── build.gradle.kts
+  │       | plugins { id("com.example.java-library") } // project type
+  │
+  └── settings.gradle.kts
+      | includeBuild("../build-logic")  // location of a source component
+      | repositories { mavenCentral() } // location of binary components
+      | include("data", "table")        // inner structure
+```
+
+
+== Component: Build Logic
+[plantuml, build-logic, png, width=200, height=0%]
+....
+scale 2400 width
+skinparam monochrome true
+skinparam component {
+    BackgroundColor white
+    BorderColor Black
+	ArrowColor Black
+}
+
+[build-logic]
+....
+
+```
+─ build-logic
+  ├── java-library
+  │   └── build.gradle.kts
+  │       | plugins { `kotlin-dsl` } // project type for Gradle plugins
+  │
+  ├── kotlin-library
+  │   └── build.gradle.kts
+  │       | plugins { `kotlin-dsl` } // project type for Gradle plugins
+  │
+  └── settings.gradle.kts
+      | // includeBuild(..) location of a source component
+      | repositories { gradlePluginPortal() }     // location of binary components
+      | include("java-library", "kotlin-library") // inner structure
+```

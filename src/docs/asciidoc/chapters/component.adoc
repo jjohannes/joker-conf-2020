@@ -1,0 +1,78 @@
+[background-color="#01303a"]
+== Defining Components as Gradle Builds
+
+== Defining Components as Gradle Builds
+
+[plantuml, plain-components, png, width=540, height=0%]
+....
+scale 2400 width
+skinparam monochrome true
+skinparam component {
+    BackgroundColor white
+    BorderColor Black
+	ArrowColor Black
+}
+
+package "Application Layer" {
+  [server-application]
+}
+
+package "Business Logic Layer" {
+  [user-feature]
+}
+
+package "Domain Model Layer" {
+  [domain-model]
+}
+....
+
+Demo #1
+
+We define each component in an independent Gradle build
+
+```
+─ domain-model
+  └── settings.gradle.kts
+
+─ server-application
+  └── settings.gradle.kts
+
+─ user-feature
+  └── settings.gradle.kts
+```
+
+== Component: User Feature
+
+[plantuml, user-feature-1, png, width=200, height=0%]
+....
+scale 2400 width
+skinparam monochrome true
+skinparam component {
+    BackgroundColor white
+    BorderColor Black
+	ArrowColor Black
+}
+
+  [user-feature]
+
+....
+
+```
+─ user-feature
+  ├── data
+  │   └─ build.gradle.kts
+  │      | plugins { id("java-library") } // generic type (core plugin)
+  │      | java { toolchain { ... } }     // inidvidual configuration
+  │      | ...
+  │
+  ├── table
+  │   └─ build.gradle.kts
+  │      | plugins { id("java-library") } // generic type (core plugin)
+  │      | java { toolchain { ... } }     // inidvidual configuration
+  │      | ...
+  │
+  └── settings.gradle.kts
+      | repositories { mavenCentral() } // location of binary components
+      | include("data", "table")        // inner component structure
+```
+

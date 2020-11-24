@@ -21,30 +21,75 @@ Joker Java Conference 2020 / Jendrik Johannes, Gradle Inc.
 +++</div>+++
 +++</h3>+++
 
-== Who is Gradle?
+== What is this Gradle?
+
+* https://github.com/gradle/gradle[*Gradle Build Tool*]
+** Open Source (APL)
+** for Java, Groovy, Kotlin, Scala, ...
+** Developed by Gradle Inc. with many community contributions
+* https://gradle.com[*Gradle Enterprise*]
+** Developer productivity technologies
+** Works with multiple Built Tools: Gradle Build Tool, Maven, ...
+** Build Insights, Caching, Performance Analysis, Flaky Test Detection, ...
+** Developed by Gradle Inc.
+
+== Who is this Gradle?
+
+Fully remote distributed company
 
 image::gradle-staff-map.png[width=1200,height=0%]
 
-== Agenda
+https://gradle.com/careers/
 
-. All things Dependency Management
-  .. API and implementation separation
-  .. Dependency constraints and platforms
-  .. Publishing and the Gradle Module Metadata format
-  .. Test fixtures and feature variants
-  .. Enrich existing Metadata with Rules
-. Java, Groovy, and Scala improvements
-. New features for plugin authors
+== Gradle Build Tool (GBT)
 
-[NOTE.speaker]
-DM starts with declaring versions and versions
+* Can be used to write incremental scripts (like Ant, but better)
+* Can be used to _model_ your software (like Maven, but better)
+* Many Gradle builds today are a mix of both
+* Its strength is its weakness: spaghetti code build scripts are common :(
 
-== Today's Sample Architecture
+== How do you control Gradle?
+
+* You write "build scripts", which should be *models of your software*
+** Either use a DSL (Domain Specific Language)
+*** based on Groovy
+*** based on Kotlin
+** Or write classes implementing an interface (`Plugin<Project>`) in Java or any other JVM language
+* Everything compiles to JVM bytecode that configures a model in memory when Gradle executes
+
+== How does Gradle work?
+
+* Runs on the JVM - everything is JVM bytecode
+* A set of core systems which are language-agnostic
+** Execution engine to perform "units of work"
+** Dependency management engine
+** File system watching
+** Caching built around all of that
+* Everything else is a *plugin*
+** Core plugins: Java, Groovy, Scala, C++, Swift, ...
+** Community plugins: Kotlin (by JetBrains), Android (by Google), Spring Boot (by Spring Team), ...
+** *Your own plugins as part of your build!*
+
+== Perspective on Gradle in this talk
+* Look at Gradle as a tool to model your software (architecture)
+* Let Gradle read that model to build your software
+* Customize "how" Gradle builds things (through plugins)
+* How do I use Gradle that way and where do I put what?
+
+Even if you are new to Gradle, you can and should start this way!
+
+== Sample Architecture
 https://docs.gradle.org/nightly/samples/sample_structuring_software_projects.html[docs.gradle.org/nightly/samples/sample_structuring_software_projects.html]
 
-[plantuml, overview, png, width=1200, height=0%]
+[plantuml, overview-all, png, width=1200, height=0%]
 ....
 scale 2400 width
+skinparam monochrome true
+skinparam component {
+    BackgroundColor white
+    BorderColor Black
+	ArrowColor Black
+}
 
 database "External Repository" {
   [Spring Boot\nFramework] as SpringBoot
@@ -57,26 +102,26 @@ package "Application Layer" {
 }
 
 package "Business Logic Layer" {
-  [user-component]
-  [admin-component]
+  [user-feature]
+  [admin-feature]
 }
 
 package "Domain Model Layer" {
   [domain-model] <-right- [state]
 }
 
-[server-application] -down-> [user-component]
-[server-application] -down-> [admin-component]
-[android-app] -down-> [user-component]
+[server-application] -down-> [user-feature]
+[server-application] -down-> [admin-feature]
+[android-app] -down-> [user-feature]
 
-[user-component] -down-> [domain-model]
-[user-component] -down-> [state]
+[user-feature] -down-> [domain-model]
+[user-feature] -down-> [state]
 
-[admin-component] -down-> [domain-model]
-[admin-component] -down-> [state]
+[admin-feature] -down-> [domain-model]
+[admin-feature] -down-> [state]
 
-[android-app] -down-> [SpringBoot]
-[server-application] -down-> [Android]
+[server-application] -down-> [SpringBoot]
+[android-app] -down-> [Android]
 
 folder {
    [build-logic]
@@ -89,29 +134,31 @@ folder {
 }
 ....
 
-include::chapters/api-implementation-separation.adoc[]
 
-include::chapters/constraints-and-platforms.adoc[]
+include::chapters/component.adoc[]
+include::chapters/build-logic.adoc[]
+include::chapters/product.adoc[]
+include::chapters/working.adoc[]
 
-include::chapters/gradle-module-metadata.adoc[]
+== Some notes...
 
-include::chapters/test-fixtures-and-variants.adoc[]
+* Gradle wrapper
+** To build without local Gradle installation
+* buildSrc
+** Legacy place for build logic from before build composition support
+** Cannot be shared among several builds
+* Term "Configuration"
+** Historically used in dependency management part of DSL/API
+** A "Variant" is currently called a "Configuration" in many places
+** Better DSL and API is work in progress (for Gradle 7.x)
 
-include::chapters/metadata-rules.adoc[]
+== Try this at home!
 
-include::chapters/jvm-toolchain.adoc[]
-
-include::chapters/plugin-authoring.adoc[]
-
-== More Resources
-
-* https://docs.gradle.org/6.0.1/release-notes.html[Gradle 6 Release Notes]
-* https://docs.gradle.org/6.0.1/userguide/userguide.html[Gradle User Manual] with more content on https://docs.gradle.org/6.0.1/userguide/core_dependency_management.html[dependency management]
-* Recorded Dependency Management webcasts
-** https://gradle.com/blog/dependency-management-fundamentals/[Dependency Management Fundamentals]
-** https://gradle.com/blog/dependency-management-part-2-handling-conflicts/[Handling Conflicts and Customizing Resolution]
-** https://gradle.com/blog/dependency-management-with-gradle-part-3-publishing-and-release-strategies/[Publishing and Release Strategies]
-* Regular online intro and advanced trainings  - https://gradle.com/training/[gradle.com/training]
+* https://docs.gradle.org/release-nightly/userguide/structuring_software_products.html[Gradle Manual: Structuring and Building a Software Product with Gradle]
+* https://docs.gradle.org/release-nightly/samples/sample_structuring_software_projects.html[Structuring Software Projects Sample]
+* Ask questions in forums: https://discuss.gradle.org[discuss.gradle.org/]
+* Report issues: https://github.com/gradle/gradle[github.com/gradle/gradle]
+* Reach me on Twitter: @jeoj
 
 [%notitle]
 == Thank you
