@@ -1,6 +1,30 @@
 [background-color="#01303a"]
 == Defining Components as Gradle Builds
 
+== How do you control Gradle?
+
+* You write "build scripts", which should be *models of your software*
+* Use Gradle Groovy DSL (Domain Specific Language)
+* Or Gradle Kotlin DSL (Domain Specific Language)
+
+{empty} +
+{empty} +
+
+NOTE: Gradle runs on the JVM and compiles to JVM bytecode.
+Other JVM language can also be used to control Gradle.
+
+//** Or write classes implementing an interface (`Plugin<Project>`) in Java or any other JVM language
+// * Everything compiles to JVM bytecode that configures a model in memory when Gradle executes
+
+== How does Gradle work?
+
+* A set of core systems which are language-agnostic
+** Execution engine, dependency management, caching, ...
+* Everything else is a *Plugin*
+** Core plugins: Java, Groovy, Scala, ...
+** Community plugins: Kotlin (by JetBrains), Android (by Google),  ...
+** *Your own plugins as part of your software!*
+
 == Defining Components as Gradle Builds
 
 [plantuml, plain-components, png, width=540, height=0%]
@@ -30,7 +54,8 @@ Demo #1
 
 We define each component in an independent Gradle build
 
-```
+[source,terminal]
+----
 ─ domain-model
   └── settings.gradle.kts
 
@@ -39,7 +64,7 @@ We define each component in an independent Gradle build
 
 ─ user-feature
   └── settings.gradle.kts
-```
+----
 
 == Component: User Feature
 
@@ -57,22 +82,23 @@ skinparam component {
 
 ....
 
-```
+[source,terminal]
+----
 ─ user-feature
   ├── data
   │   └─ build.gradle.kts
   │      | plugins { id("java-library") } // generic type (core plugin)
-  │      | java { toolchain { ... } }     // inidvidual configuration
+  │      | java    { toolchain { ... } }  // inidvidual configuration
   │      | ...
   │
   ├── table
   │   └─ build.gradle.kts
   │      | plugins { id("java-library") } // generic type (core plugin)
-  │      | java { toolchain { ... } }     // inidvidual configuration
+  │      | java    { toolchain { ... } }  // inidvidual configuration
   │      | ...
   │
   └── settings.gradle.kts
       | repositories { mavenCentral() } // location of binary components
       | include("data", "table")        // inner component structure
-```
+----
 

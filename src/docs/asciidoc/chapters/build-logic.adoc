@@ -42,7 +42,8 @@ folder {
 
 Demo #2 - We add a separate component (Gradle build) for build logic
 
-```
+[source,terminal]
+----
 - build-logic
   └── settings.gradle.kts
 
@@ -54,11 +55,11 @@ Demo #2 - We add a separate component (Gradle build) for build logic
 
 - user-feature
   └── settings.gradle.kts
-```
+----
 
 == Component: User Feature
 
-[plantuml, user-feature-2, png, width=200, height=0%]
+[plantuml, user-feature-2, png, width=220, height=0%]
 ....
 scale 2400 width
 skinparam monochrome true
@@ -71,7 +72,8 @@ skinparam component {
 [user-feature]
 ....
 
-```
+[source,terminal]
+----
 ─ user-feature
   ├── data
   │   └── build.gradle.kts
@@ -85,7 +87,7 @@ skinparam component {
       | includeBuild("../build-logic")  // location of a source component
       | repositories { mavenCentral() } // location of binary components
       | include("data", "table")        // inner structure
-```
+----
 
 
 == Component: Build Logic
@@ -102,7 +104,8 @@ skinparam component {
 [build-logic]
 ....
 
-```
+[source,terminal]
+----
 ─ build-logic
   ├── java-library
   │   └── build.gradle.kts
@@ -113,7 +116,7 @@ skinparam component {
   │       | plugins { `kotlin-dsl` } // project type for Gradle plugins
   │
   └── settings.gradle.kts
-      | // includeBuild(..) location of a source component
-      | repositories { gradlePluginPortal() }     // location of binary components
+      | // includeBuild(..)                   // location source component
+      | repositories { gradlePluginPortal() } // location binary components
       | include("java-library", "kotlin-library") // inner structure
-```
+----

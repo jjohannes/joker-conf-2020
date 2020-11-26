@@ -45,7 +45,8 @@ folder {
 
 Demo #3 - We add dependencies between our components
 
-```
+[source,terminal]
+----
 - build-logic
   └── settings.gradle.kts
 
@@ -57,7 +58,7 @@ Demo #3 - We add dependencies between our components
 
 - user-feature
   └── settings.gradle.kts
-```
+----
 
 == Component: User Feature
 
@@ -74,7 +75,8 @@ skinparam component {
 [user-feature]
 ....
 
-```
+[source,terminal]
+----
 ─ user-feature
   ├── data
   │   └── build.gradle.kts
@@ -91,4 +93,4 @@ skinparam component {
       | includeBuild("../domain-model") // location of a source component
       | repositories { mavenCentral() } // location of binary components
       | include("data", "table")        // inner structure
-```
+----

@@ -1,7 +1,7 @@
 [background-color="#01303a"]
 == Working with your Gradle builds
 
-== Calling Gradle tasks
+== Gradle tasks
 
 - Gradle knows inputs and outputs
 - If output of a task is the input of another, there is a dependency
@@ -17,13 +17,11 @@ Exploring: task execution, incremental builds, build cache, custom tasks
 
 * An abstract class extending `DefaultTask`
 * Written in Java, Scala, Groovy, Kotlin
-* Define properties as annotated abstract getter methods (`getPropertyName()`)
-** `@InputFile`, `@InputFiles`, `@OutputFile`, `@OutputDirectory`
-** Each task should have at least one input and one output
-** Used for: task dependency, incremental builds, build cache
-* Each task has at least one action implemented in a `@TaskAction` method
-** Usually you have only one action method
-** From there, delegate to other methods/classes or call external tools
+* Properties as annotated abstract getter methods (`getPropertyName()`)
+// ** `@InputFile`, `@InputFiles`, `@OutputFile`, `@OutputDirectory`
+// ** Each task should have at least one input and one output
+// ** Used for: task dependency, incremental builds, build cache
+* Each task has an action implemented in a `@TaskAction` method
 
 == Variants and dependency resolution
 
@@ -82,19 +80,31 @@ runtimeClasspath .up..> dataRT
 - Publish any project as binary component with `maven-publish` plugin
 - Published to repository (can be a local folder)
 
-```
+[plantuml, binary-component, png, width=220, height=0%]
+....
+scale 2400 width
+skinparam monochrome true
+skinparam component {
+    BackgroundColor white
+    BorderColor Black
+	ArrowColor Black
+}
+
+database "External Repository" {
+  [domain-model]
+}
+
+package "Business Logic Layer" {
+  [user-feature]
+}
+
+[user-feature] --> [domain-model]
+....
+
+[source,terminal]
+----
 ─ user-feature
   └── settings.gradle.kts
-      | ...
-      | // includeBuild("../domain-model")
+      | // includeBuild("domain-model") // find here ⤵️ instead
       | repositories { maven { url = uri("my-repository") } }
-      | ...
-```
-
-// == Sharing location declaration (settings.gradle)
-
-
-
-
-
-
+----

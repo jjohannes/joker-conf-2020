@@ -21,19 +21,6 @@ Joker Java Conference 2020 / Jendrik Johannes, Gradle Inc.
 +++</div>+++
 +++</h3>+++
 
-== What is Gradle?
-
-* https://github.com/gradle/gradle[*Gradle Build Tool*]
-** Open Source (APL)
-** for Java, Groovy, Kotlin, Scala, ...
-** Developed by Gradle Inc. with many community contributions
-* https://gradle.com[*Gradle Enterprise*]
-** Developer productivity technologies
-** Works with multiple Built Tools: Gradle Build Tool, Maven, ...
-** Build Insights, Caching, Performance Analysis, Flaky Test Detection, ...
-** Developed by Gradle Inc.
-** Public build scans for Gradle: https://scans.gradle.com/[scans.gradle.com]
-
 == Who is Gradle?
 
 Fully remote distributed company
@@ -42,48 +29,44 @@ image::gradle-staff-map.png[width=1200,height=0%]
 
 https://gradle.com/careers
 
-== Gradle Build Tool (GBT)
+== What is Gradle?
 
-* Can be used to write incremental scripts (like Ant, but better)
-* Can be used to _model_ your software (like Maven, but better)
+* https://github.com/gradle/gradle[*Gradle Build Tool*]
+** Open Source (APL)
+** for Java, Groovy, Kotlin, Scala, ...
+** Developed by Gradle Inc. with many community contributions
+
+== What is Gradle?
+
+* https://gradle.com[*Gradle Enterprise*]
+** Works with multiple Built Tools: Gradle Build Tool, Maven, ...
+** Build Insights, Caching, Performance Analysis, Flaky Test Detection, ...
+
+* Public Build Scans for Gradle builds: https://scans.gradle.com/[scans.gradle.com]
+
+== What's special about Gradle Build Tool?
+
+* Can be used to write incremental scripts
+** like Ant, but with a proper programming language
+* Can be used to _model_ your software
+** like Maven, but with a richer and more extensible model
 * Many Gradle builds today are a mix of both
-* Its strength is its weakness: spaghetti code build scripts are common :(
-
-== How do you control Gradle?
-
-* You write "build scripts", which should be *models of your software*
-** Either use a DSL (Domain Specific Language)
-*** based on Groovy
-*** based on Kotlin
-** Or write classes implementing an interface (`Plugin<Project>`) in Java or any other JVM language
-* Everything compiles to JVM bytecode that configures a model in memory when Gradle executes
-
-== How does Gradle work?
-
-* Runs on the JVM
-* A set of core systems which are language-agnostic
-** Execution engine to execute "units of work"
-** Dependency management engine
-** File system watching
-** Caching built around all of that
-* Everything else is a *plugin*
-** Core plugins: Java, Groovy, Scala, C++, Swift, ...
-** Community plugins: Kotlin (by JetBrains), Android (by Google), Spring Boot (by Spring Team), ...
-** *Your own plugins as part of your build!*
+** Its strength is its weakness: spaghetti code build scripts are common :(
 
 == Perspective on Gradle in this talk
 
-* Look at Gradle as a tool to model your software (architecture)
+* Look at Gradle as a tool to model your software
 * Let Gradle read that model to build your software
-* Customize "how" Gradle builds things (through plugins)
-* How do I use Gradle that way and where do I put what?
+
+{empty} +
+{empty} +
 
 Even if you are new to Gradle, you can and should start this way!
 
 == Sample Architecture
-https://docs.gradle.org/nightly/samples/sample_structuring_software_projects.html[docs.gradle.org/nightly/samples/sample_structuring_software_projects.html]
+https://docs.gradle.org/release-candidate/samples/sample_structuring_software_projects.html[docs.gradle.org/samples/sample_structuring_software_projects]
 
-[plantuml, overview-all, png, width=1200, height=0%]
+[plantuml, overview-reduced, png, width=400, height=0%]
 ....
 scale 2400 width
 skinparam monochrome true
@@ -95,64 +78,47 @@ skinparam component {
 
 database "External Repository" {
   [Spring Boot\nFramework] as SpringBoot
-  [Android\nFramework] as Android
 }
 
 package "Application Layer" {
   [server-application]
-  [android-app]
 }
 
 package "Business Logic Layer" {
   [user-feature]
-  [admin-feature]
 }
 
 package "Domain Model Layer" {
-  [domain-model] <-right- [state]
+  [domain-model]
 }
 
 [server-application] -down-> [user-feature]
-[server-application] -down-> [admin-feature]
-[android-app] -down-> [user-feature]
 
 [user-feature] -down-> [domain-model]
-[user-feature] -down-> [state]
-
-[admin-feature] -down-> [domain-model]
-[admin-feature] -down-> [state]
 
 [server-application] -down-> [SpringBoot]
-[android-app] -down-> [Android]
 
 folder {
    [build-logic]
 }
-folder {
-   [platforms]
-}
-folder {
-    [aggregation]
-}
 ....
-
 
 include::chapters/component.adoc[]
 include::chapters/build-logic.adoc[]
 include::chapters/product.adoc[]
 include::chapters/working.adoc[]
 
-== Some notes...
-
-* Gradle wrapper
-** To build without local Gradle installation
-* buildSrc
-** Legacy place for build logic from before build composition support
-** Cannot be shared among several builds
-* Term "Configuration"
-** Historically used in dependency management part of DSL/API
-** A "Variant" is currently called a "Configuration" in many places
-** Better DSL and API is work in progress (for Gradle 7.x)
+//== Some notes...
+//
+//* Gradle wrapper
+//** To build without local Gradle installation
+//* buildSrc
+//** Legacy place for build logic from before build composition support
+//** Cannot be shared among several builds
+//* Term "Configuration"
+//** Historically used in dependency management part of DSL/API
+//** A "Variant" is currently called a "Configuration" in many places
+//** Better DSL and API is work in progress (for Gradle 7.x)
 
 == Try this at home!
 
@@ -160,7 +126,7 @@ include::chapters/working.adoc[]
 * https://docs.gradle.org/release-nightly/samples/sample_structuring_software_projects.html[Structuring Software Projects Sample]
 * Ask questions in forums: https://discuss.gradle.org[discuss.gradle.org/]
 * Report issues: https://github.com/gradle/gradle[github.com/gradle/gradle]
-* Reach me on Twitter: @jeoj
+* Reach me on Twitter: https://twitter.com/jeoj[@jeoj]
 
 [%notitle]
 == Thank you
