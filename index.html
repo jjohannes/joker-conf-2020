@@ -22,22 +22,29 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 Joker Java Conference 2020 / Jendrik Johannes, Gradle Inc.
 </div>
 </h3></p></div></div></section>
-<section id="what-is-gradle" data-transition="none"><h2>What is Gradle?</h2><div class="ulist"><ul><li><p><a href="https://github.com/gradle/gradle"><strong>Gradle Build Tool</strong></a></p><div class="ulist"><ul><li><p>Open Source (APL)</p></li><li><p>for Java, Groovy, Kotlin, Scala, &#8230;&#8203;</p></li><li><p>Developed by Gradle Inc. with many community contributions</p></li></ul></div></li><li><p><a href="https://gradle.com"><strong>Gradle Enterprise</strong></a></p><div class="ulist"><ul><li><p>Developer productivity technologies</p></li><li><p>Works with multiple Built Tools: Gradle Build Tool, Maven, &#8230;&#8203;</p></li><li><p>Build Insights, Caching, Performance Analysis, Flaky Test Detection, &#8230;&#8203;</p></li><li><p>Developed by Gradle Inc.</p></li><li><p>Public build scans for Gradle: <a href="https://scans.gradle.com/">scans.gradle.com</a></p></li></ul></div></li></ul></div></section>
 <section id="who-is-gradle" data-transition="none"><h2>Who is Gradle?</h2><div class="paragraph"><p>Fully remote distributed company</p></div>
 <div class="imageblock" style=""><img src="./images/gradle-staff-map.png" alt="gradle staff map" width="1200" height="0%" /></div>
 <div class="paragraph"><p><a href="https://gradle.com/careers" class="bare">https://gradle.com/careers</a></p></div></section>
-<section id="gradle-build-tool-gbt" data-transition="none"><h2>Gradle Build Tool (GBT)</h2><div class="ulist"><ul><li><p>Can be used to write incremental scripts (like Ant, but better)</p></li><li><p>Can be used to <em>model</em> your software (like Maven, but better)</p></li><li><p>Many Gradle builds today are a mix of both</p></li><li><p>Its strength is its weakness: spaghetti code build scripts are common :(</p></li></ul></div></section>
-<section id="how-do-you-control-gradle" data-transition="none"><h2>How do you control Gradle?</h2><div class="ulist"><ul><li><p>You write "build scripts", which should be <strong>models of your software</strong></p><div class="ulist"><ul><li><p>Either use a DSL (Domain Specific Language)</p><div class="ulist"><ul><li><p>based on Groovy</p></li><li><p>based on Kotlin</p></li></ul></div></li><li><p>Or write classes implementing an interface (<code>Plugin&lt;Project&gt;</code>) in Java or any other JVM language</p></li></ul></div></li><li><p>Everything compiles to JVM bytecode that configures a model in memory when Gradle executes</p></li></ul></div></section>
-<section id="how-does-gradle-work" data-transition="none"><h2>How does Gradle work?</h2><div class="ulist"><ul><li><p>Runs on the JVM</p></li><li><p>A set of core systems which are language-agnostic</p><div class="ulist"><ul><li><p>Execution engine to execute "units of work"</p></li><li><p>Dependency management engine</p></li><li><p>File system watching</p></li><li><p>Caching built around all of that</p></li></ul></div></li><li><p>Everything else is a <strong>plugin</strong></p><div class="ulist"><ul><li><p>Core plugins: Java, Groovy, Scala, C++, Swift, &#8230;&#8203;</p></li><li><p>Community plugins: Kotlin (by JetBrains), Android (by Google), Spring Boot (by Spring Team), &#8230;&#8203;</p></li><li><p><strong>Your own plugins as part of your build!</strong></p></li></ul></div></li></ul></div></section>
-<section id="perspective-on-gradle-in-this-talk" data-transition="none"><h2>Perspective on Gradle in this talk</h2><div class="ulist"><ul><li><p>Look at Gradle as a tool to model your software (architecture)</p></li><li><p>Let Gradle read that model to build your software</p></li><li><p>Customize "how" Gradle builds things (through plugins)</p></li><li><p>How do I use Gradle that way and where do I put what?</p></li></ul></div>
+<section id="what-is-gradle" data-transition="none"><h2>What is Gradle?</h2><div class="ulist"><ul><li><p><a href="https://github.com/gradle/gradle"><strong>Gradle Build Tool</strong></a></p><div class="ulist"><ul><li><p>Open Source (APL)</p></li><li><p>for Java, Groovy, Kotlin, Scala, &#8230;&#8203;</p></li><li><p>Developed by Gradle Inc. with many community contributions</p></li></ul></div></li></ul></div></section>
+<section id="what-is-gradle-2" data-transition="none"><h2>What is Gradle?</h2><div class="ulist"><ul><li><p><a href="https://gradle.com"><strong>Gradle Enterprise</strong></a></p><div class="ulist"><ul><li><p>Works with multiple Built Tools: Gradle Build Tool, Maven, &#8230;&#8203;</p></li><li><p>Build Insights, Caching, Performance Analysis, Flaky Test Detection, &#8230;&#8203;</p></li></ul></div></li><li><p>Public Build Scans for Gradle builds: <a href="https://scans.gradle.com/">scans.gradle.com</a></p></li></ul></div></section>
+<section id="what-s-special-about-gradle-build-tool" data-transition="none"><h2>What&#8217;s special about Gradle Build Tool?</h2><div class="ulist"><ul><li><p>Can be used to write imperative scripts</p><div class="ulist"><ul><li><p>like Ant, but with a proper programming language</p></li></ul></div></li><li><p>Can be used to <em>model</em> your software</p><div class="ulist"><ul><li><p>like Maven, but with a richer and more extensible model</p></li></ul></div></li><li><p>Many Gradle builds today are a mix of both</p><div class="ulist"><ul><li><p>Its strength is its weakness: spaghetti code build scripts are common :(</p></li></ul></div></li></ul></div></section>
+<section id="perspective-on-gradle-in-this-talk" data-transition="none"><h2>Perspective on Gradle in this talk</h2><div class="ulist"><ul><li><p>Look at Gradle as a tool to model your software</p></li><li><p>Let Gradle read that model to build your software</p></li></ul></div>
+<div class="paragraph"><p><br />
+<br /></p></div>
 <div class="paragraph"><p>Even if you are new to Gradle, you can and should start this way!</p></div></section>
-<section id="sample-architecture" data-transition="none"><h2>Sample Architecture</h2><div class="paragraph"><p><a href="https://docs.gradle.org/nightly/samples/sample_structuring_software_projects.html">docs.gradle.org/nightly/samples/sample_structuring_software_projects.html</a></p></div>
-<div class="imageblock" style=""><img src="./images/overview-all.png" alt="overview all" width="1200" height="0%" /></div></section>
+<section id="sample-architecture" data-transition="none"><h2>Sample Architecture</h2><div class="paragraph"><p><a href="https://docs.gradle.org/release-candidate/samples/sample_structuring_software_projects.html">docs.gradle.org/samples/sample_structuring_software_projects</a></p></div>
+<div class="imageblock" style=""><img src="./images/overview-reduced.png" alt="overview reduced" width="400" height="0%" /></div></section>
 <section id="defining-components-as-gradle-builds" data-transition="none" data-background-color="#01303a"><h2>Defining Components as Gradle Builds</h2></section>
+<section id="how-do-you-control-gradle" data-transition="none"><h2>How do you control Gradle?</h2><div class="ulist"><ul><li><p>You write "build scripts", which should be <strong>models of your software</strong></p></li><li><p>Use Gradle Groovy DSL (Domain Specific Language)</p></li><li><p>Or Gradle Kotlin DSL (Domain Specific Language)</p></li></ul></div>
+<div class="paragraph"><p><br />
+<br /></p></div>
+<div class="admonitionblock note"><table><tr><td class="icon"><i class="fa fa-info-circle" title="Note"></i></td><td class="content">Gradle runs on the JVM and compiles to JVM bytecode.
+Other JVM language can also be used to control Gradle.</td></tr></table></div></section>
+<section id="how-does-gradle-work" data-transition="none"><h2>How does Gradle work?</h2><div class="ulist"><ul><li><p>A set of core systems which are language-agnostic</p><div class="ulist"><ul><li><p>Execution engine, dependency management, caching, &#8230;&#8203;</p></li></ul></div></li><li><p>Everything else is a <strong>Plugin</strong></p><div class="ulist"><ul><li><p>Core plugins: Java, Groovy, Scala, &#8230;&#8203;</p></li><li><p>Community plugins: Kotlin (by JetBrains), Android (by Google),  &#8230;&#8203;</p></li><li><p><strong>Your own plugins as part of your software!</strong></p></li></ul></div></li></ul></div></section>
 <section id="defining-components-as-gradle-builds-2" data-transition="none"><h2>Defining Components as Gradle Builds</h2><div class="imageblock" style=""><img src="./images/plain-components.png" alt="plain components" width="540" height="0%" /></div>
 <div class="paragraph"><p>Demo #1</p></div>
 <div class="paragraph"><p>We define each component in an independent Gradle build</p></div>
-<pre class="highlight listingblock"><code data-noescape="">─ domain-model
+<pre class="highlight listingblock"><code data-noescape="" class="terminal language-terminal">─ domain-model
   └── settings.gradle.kts
 
 ─ server-application
@@ -46,26 +53,25 @@ Joker Java Conference 2020 / Jendrik Johannes, Gradle Inc.
 ─ user-feature
   └── settings.gradle.kts</code></pre></section>
 <section id="component-user-feature" data-transition="none"><h2>Component: User Feature</h2><div class="imageblock" style=""><img src="./images/user-feature-1.png" alt="user feature 1" width="200" height="0%" /></div>
-<pre class="highlight listingblock"><code data-noescape="">─ user-feature
+<pre class="highlight listingblock"><code data-noescape="" class="terminal language-terminal">─ user-feature
   ├── data
   │   └─ build.gradle.kts
   │      | plugins { id("java-library") } // generic type (core plugin)
-  │      | java { toolchain { ... } }     // inidvidual configuration
+  │      | java    { toolchain { ... } }  // inidvidual configuration
   │      | ...
   │
   ├── table
   │   └─ build.gradle.kts
   │      | plugins { id("java-library") } // generic type (core plugin)
-  │      | java { toolchain { ... } }     // inidvidual configuration
+  │      | java    { toolchain { ... } }  // inidvidual configuration
   │      | ...
   │
   └── settings.gradle.kts
-      | repositories { mavenCentral() } // location of binary components
       | include("data", "table")        // inner component structure</code></pre></section>
 <section id="organising-build-configuration-in-a-build-logic-component" data-transition="none" data-background-color="#01303a"><h2>Organising Build Configuration in a Build Logic Component</h2></section>
 <section id="adding-a-build-logic-component" data-transition="none"><h2>Adding a Build Logic Component</h2><div class="imageblock" style=""><img src="./images/arch-component-10.png" alt="arch component 10" width="540" height="0%" /></div>
 <div class="paragraph"><p>Demo #2 - We add a separate component (Gradle build) for build logic</p></div>
-<pre class="highlight listingblock"><code data-noescape="">- build-logic
+<pre class="highlight listingblock"><code data-noescape="" class="terminal language-terminal">- build-logic
   └── settings.gradle.kts
 
 - domain-model
@@ -76,8 +82,8 @@ Joker Java Conference 2020 / Jendrik Johannes, Gradle Inc.
 
 - user-feature
   └── settings.gradle.kts</code></pre></section>
-<section id="component-user-feature-2" data-transition="none"><h2>Component: User Feature</h2><div class="imageblock" style=""><img src="./images/user-feature-2.png" alt="user feature 2" width="200" height="0%" /></div>
-<pre class="highlight listingblock"><code data-noescape="">─ user-feature
+<section id="component-user-feature-2" data-transition="none"><h2>Component: User Feature</h2><div class="imageblock" style=""><img src="./images/user-feature-2.png" alt="user feature 2" width="220" height="0%" /></div>
+<pre class="highlight listingblock"><code data-noescape="" class="terminal language-terminal">─ user-feature
   ├── data
   │   └── build.gradle.kts
   │       | plugins { id("com.example.java-library") } // project type
@@ -91,7 +97,7 @@ Joker Java Conference 2020 / Jendrik Johannes, Gradle Inc.
       | repositories { mavenCentral() } // location of binary components
       | include("data", "table")        // inner structure</code></pre></section>
 <section id="component-build-logic" data-transition="none"><h2>Component: Build Logic</h2><div class="imageblock" style=""><img src="./images/build-logic.png" alt="build logic" width="200" height="0%" /></div>
-<pre class="highlight listingblock"><code data-noescape="">─ build-logic
+<pre class="highlight listingblock"><code data-noescape="" class="terminal language-terminal">─ build-logic
   ├── java-library
   │   └── build.gradle.kts
   │       | plugins { `kotlin-dsl` } // project type for Gradle plugins
@@ -101,13 +107,13 @@ Joker Java Conference 2020 / Jendrik Johannes, Gradle Inc.
   │       | plugins { `kotlin-dsl` } // project type for Gradle plugins
   │
   └── settings.gradle.kts
-      | // includeBuild(..) location of a source component
-      | repositories { gradlePluginPortal() }     // location of binary components
+      | // includeBuild(..)                   // location source component
+      | repositories { gradlePluginPortal() } // location binary components
       | include("java-library", "kotlin-library") // inner structure</code></pre></section>
 <section id="composing-a-product-from-components" data-transition="none" data-background-color="#01303a"><h2>Composing a Product from Components</h2></section>
 <section id="composing-a-product-from-components-2" data-transition="none"><h2>Composing a Product from Components</h2><div class="imageblock" style=""><img src="./images/product.png" alt="product" width="540" height="0%" /></div>
 <div class="paragraph"><p>Demo #3 - We add dependencies between our components</p></div>
-<pre class="highlight listingblock"><code data-noescape="">- build-logic
+<pre class="highlight listingblock"><code data-noescape="" class="terminal language-terminal">- build-logic
   └── settings.gradle.kts
 
 - domain-model
@@ -119,7 +125,7 @@ Joker Java Conference 2020 / Jendrik Johannes, Gradle Inc.
 - user-feature
   └── settings.gradle.kts</code></pre></section>
 <section id="component-user-feature-3" data-transition="none"><h2>Component: User Feature</h2><div class="imageblock" style=""><img src="./images/user-feature-3.png" alt="user feature 3" width="200" height="0%" /></div>
-<pre class="highlight listingblock"><code data-noescape="">─ user-feature
+<pre class="highlight listingblock"><code data-noescape="" class="terminal language-terminal">─ user-feature
   ├── data
   │   └── build.gradle.kts
   │       | plugins { id("com.example.java-library") } // project type
@@ -136,21 +142,19 @@ Joker Java Conference 2020 / Jendrik Johannes, Gradle Inc.
       | repositories { mavenCentral() } // location of binary components
       | include("data", "table")        // inner structure</code></pre></section>
 <section id="working-with-your-gradle-builds" data-transition="none" data-background-color="#01303a"><h2>Working with your Gradle builds</h2></section>
-<section id="calling-gradle-tasks" data-transition="none"><h2>Calling Gradle tasks</h2><div class="ulist"><ul><li><p>Gradle knows inputs and outputs</p></li><li><p>If output of a task is the input of another, there is a dependency</p></li><li><p>Incremental - a task only executes if input/output changes</p></li><li><p>Build cache - Outputs can be retrieved from (remote) cache</p></li></ul></div>
+<section id="gradle-tasks" data-transition="none"><h2>Gradle tasks</h2><div class="ulist"><ul><li><p>Gradle knows inputs and outputs</p></li><li><p>If output of a task is the input of another, there is a dependency</p></li><li><p>Incremental - a task only executes if input/output changes</p></li><li><p>Build cache - Outputs can be retrieved from (remote) cache</p></li></ul></div>
 <div class="paragraph"><p>Demo #4</p></div>
 <div class="paragraph"><p>Exploring: task execution, incremental builds, build cache, custom tasks</p></div></section>
-<section id="custom-tasks" data-transition="none"><h2>Custom tasks</h2><div class="ulist"><ul><li><p>An abstract class extending <code>DefaultTask</code></p></li><li><p>Written in Java, Scala, Groovy, Kotlin</p></li><li><p>Define properties as annotated abstract getter methods (<code>getPropertyName()</code>)</p><div class="ulist"><ul><li><p><code>@InputFile</code>, <code>@InputFiles</code>, <code>@OutputFile</code>, <code>@OutputDirectory</code></p></li><li><p>Each task should have at least one input and one output</p></li><li><p>Used for: task dependency, incremental builds, build cache</p></li></ul></div></li><li><p>Each task has at least one action implemented in a <code>@TaskAction</code> method</p><div class="ulist"><ul><li><p>Usually you have only one action method</p></li><li><p>From there, delegate to other methods/classes or call external tools</p></li></ul></div></li></ul></div></section>
+<section id="custom-tasks" data-transition="none"><h2>Custom tasks</h2><div class="ulist"><ul><li><p>An abstract class extending <code>DefaultTask</code></p></li><li><p>Written in Java, Scala, Groovy, Kotlin</p></li><li><p>Properties as annotated abstract getter methods (<code>getPropertyName()</code>)</p></li><li><p>Each task has an action implemented in a <code>@TaskAction</code> method</p></li></ul></div></section>
 <section id="variants-and-dependency-resolution" data-transition="none"><h2>Variants and dependency resolution</h2><div class="ulist"><ul><li><p>Each project (or binary component) has multiple variants</p></li><li><p>Gradle selects one variant during <em>dependency resolution</em></p></li><li><p>For example: Java Libraries have an "API" and a "Runtime" variant</p></li></ul></div>
 <div class="imageblock" style=""><img src="./images/variants-declared.png" alt="variants declared" width="540" height="0%" /></div></section>
 <section id="publishing-and-using-binary-components" data-transition="none"><h2>Publishing and using binary components</h2><div class="ulist"><ul><li><p>Publish any project as binary component with <code>maven-publish</code> plugin</p></li><li><p>Published to repository (can be a local folder)</p></li></ul></div>
-<pre class="highlight listingblock"><code data-noescape="">─ user-feature
+<div class="imageblock" style=""><img src="./images/binary-component.png" alt="binary component" width="220" height="0%" /></div>
+<pre class="highlight listingblock"><code data-noescape="" class="terminal language-terminal">─ user-feature
   └── settings.gradle.kts
-      | ...
-      | // includeBuild("../domain-model")
-      | repositories { maven { url = uri("my-repository") } }
-      | ...</code></pre></section>
-<section id="some-notes" data-transition="none"><h2>Some notes&#8230;&#8203;</h2><div class="ulist"><ul><li><p>Gradle wrapper</p><div class="ulist"><ul><li><p>To build without local Gradle installation</p></li></ul></div></li><li><p>buildSrc</p><div class="ulist"><ul><li><p>Legacy place for build logic from before build composition support</p></li><li><p>Cannot be shared among several builds</p></li></ul></div></li><li><p>Term "Configuration"</p><div class="ulist"><ul><li><p>Historically used in dependency management part of DSL/API</p></li><li><p>A "Variant" is currently called a "Configuration" in many places</p></li><li><p>Better DSL and API is work in progress (for Gradle 7.x)</p></li></ul></div></li></ul></div></section>
-<section id="try-this-at-home" data-transition="none"><h2>Try this at home!</h2><div class="ulist"><ul><li><p><a href="https://docs.gradle.org/release-nightly/userguide/structuring_software_products.html">Gradle Manual: Structuring and Building a Software Product with Gradle</a></p></li><li><p><a href="https://docs.gradle.org/release-nightly/samples/sample_structuring_software_projects.html">Structuring Software Projects Sample</a></p></li><li><p>Ask questions in forums: <a href="https://discuss.gradle.org">discuss.gradle.org/</a></p></li><li><p>Report issues: <a href="https://github.com/gradle/gradle">github.com/gradle/gradle</a></p></li><li><p>Reach me on Twitter: @jeoj</p></li></ul></div></section>
+      | // includeBuild("domain-model") // find here ⤵️ instead
+      | repositories { maven { url = uri("my-repository") } }</code></pre></section>
+<section id="try-this-at-home" data-transition="none"><h2>Try this at home!</h2><div class="ulist"><ul><li><p><a href="https://docs.gradle.org/release-nightly/userguide/structuring_software_products.html">Gradle Manual: Structuring and Building a Software Product with Gradle</a></p></li><li><p><a href="https://docs.gradle.org/release-nightly/samples/sample_structuring_software_projects.html">Structuring Software Projects Sample</a></p></li><li><p>Ask questions in forums: <a href="https://discuss.gradle.org">discuss.gradle.org/</a></p></li><li><p>Report issues: <a href="https://github.com/gradle/gradle">github.com/gradle/gradle</a></p></li><li><p>Reach me on Twitter: <a href="https://twitter.com/jeoj">@jeoj</a></p></li></ul></div></section>
 <section id="thank-you" data-transition="none" data-background-image="./images/thank-you.png" data-background-size="cover" data-background-transition="none"></section></div></div><script src="reveal.js/lib/js/head.min.js"></script><script src="reveal.js/js/reveal.js"></script><script>Array.prototype.slice.call(document.querySelectorAll('.slides section')).forEach(function(slide) {
   if (slide.getAttribute('data-background-color')) return;
   // user needs to explicitly say he wants CSS color to override otherwise we might break custom css or theme (#226)
