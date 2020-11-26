@@ -15,6 +15,7 @@ skinparam component {
 
 database "External Repository" {
   [Spring Boot\nFramework] as SpringBoot
+  [Jackson]
 }
 
 package "Application Layer" {
@@ -30,6 +31,7 @@ package "Domain Model Layer" {
 }
 
 [server-application] -down-> [SpringBoot]
+[user-feature] -> [Jackson]
 
 folder {
    [build-logic]

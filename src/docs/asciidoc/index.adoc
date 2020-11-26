@@ -46,7 +46,7 @@ https://gradle.com/careers
 
 == What's special about Gradle Build Tool?
 
-* Can be used to write incremental scripts
+* Can be used to write imperative scripts
 ** like Ant, but with a proper programming language
 * Can be used to _model_ your software
 ** like Maven, but with a richer and more extensible model

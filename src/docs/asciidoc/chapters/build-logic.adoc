@@ -13,10 +13,6 @@ skinparam component {
 	ArrowColor Black
 }
 
-database "External Repository" {
-  [Spring Boot\nFramework] as SpringBoot
-}
-
 package "Application Layer" {
   [server-application]
 }
@@ -28,8 +24,6 @@ package "Business Logic Layer" {
 package "Domain Model Layer" {
   [domain-model]
 }
-
-[server-application] -down-> [SpringBoot]
 
 folder {
    [build-logic]
