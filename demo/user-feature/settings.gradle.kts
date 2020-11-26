@@ -1,11 +1,8 @@
 includeBuild("../build-logic")
 
-dependencyResolutionManagement {
-    repositories {
-        mavenCentral()
-    }
-}
 includeBuild("../domain-model")
+dependencyResolutionManagement {
+    repositories { mavenCentral() }
+}
 
-include("table")
-include("data")
+include("data", "table")

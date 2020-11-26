@@ -1,12 +1,9 @@
 includeBuild("../build-logic")
 
-dependencyResolutionManagement {
-    repositories {
-        mavenCentral()
-    }
-}
-
 includeBuild("../user-feature")
 includeBuild("../domain-model")
+dependencyResolutionManagement {
+    repositories { mavenCentral() }
+}
 
 include("app")

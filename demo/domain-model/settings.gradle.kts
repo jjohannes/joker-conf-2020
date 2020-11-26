@@ -1,9 +1,6 @@
 includeBuild("../build-logic")
 
+include("release")
 dependencyResolutionManagement {
-    repositories {
-        mavenCentral()
-    }
+    repositories { mavenCentral() }
 }
-
-include("release") // a project for data classes that represent software releases
