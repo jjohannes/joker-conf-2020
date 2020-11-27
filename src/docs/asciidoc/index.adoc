@@ -108,17 +108,11 @@ include::chapters/build-logic.adoc[]
 include::chapters/product.adoc[]
 include::chapters/working.adoc[]
 
-//== Some notes...
-//
-//* Gradle wrapper
-//** To build without local Gradle installation
-//* buildSrc
-//** Legacy place for build logic from before build composition support
-//** Cannot be shared among several builds
-//* Term "Configuration"
-//** Historically used in dependency management part of DSL/API
-//** A "Variant" is currently called a "Configuration" in many places
-//** Better DSL and API is work in progress (for Gradle 7.x)
+== Summary
+
+* Look at Gradle as a tool to model your software
+* Treat each component in your architecture as a separate Gradle build
+* Treat build configuration and customization as separate components
 
 == Try this at home!
 
@@ -133,3 +127,5 @@ include::chapters/working.adoc[]
 
 image::thank-you.png[background, size=cover]
 
+
+include::chapters/backup.adoc[]
