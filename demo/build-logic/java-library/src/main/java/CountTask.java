@@ -22,6 +22,8 @@ abstract public class CountTask extends DefaultTask {
     public void count() throws IOException {
         Set<File> files = getFilesToCount().getAsFileTree().getFiles();
 
+        System.out.println("Count Executed");
+
         FileWriter writer = new FileWriter(getCountTxt().get().getAsFile());
         writer.write("We have " + files.size() + " files.\n\n");
         for (File f: files) {
