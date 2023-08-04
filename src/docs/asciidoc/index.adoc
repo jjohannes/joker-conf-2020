@@ -120,7 +120,7 @@ include::chapters/working.adoc[]
 * https://docs.gradle.org/release-nightly/samples/sample_structuring_software_projects.html[Structuring Software Projects Sample]
 * Ask questions in forums: https://discuss.gradle.org[discuss.gradle.org/]
 * Report issues: https://github.com/gradle/gradle[github.com/gradle/gradle]
-* Reach me on Twitter: https://twitter.com/jeoj[@jeoj]
+* Reach me on Mastodon: https://mastodon.social/@jendrik[@jendrik@mastodon.social]
 
 [%notitle]
 == Thank you
